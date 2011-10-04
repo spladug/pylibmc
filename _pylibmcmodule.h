@@ -269,6 +269,7 @@ static PyObject *PylibMC_Client_get_stats(PylibMC_Client *, PyObject *);
 static PyObject *PylibMC_Client_flush_all(PylibMC_Client *, PyObject *, PyObject *);
 static PyObject *PylibMC_Client_disconnect_all(PylibMC_Client *);
 static PyObject *PylibMC_Client_clone(PylibMC_Client *);
+static PyObject *PylibMC_Client_server_by_key(PylibMC_Client *self, PyObject *arg);
 static PyObject *PylibMC_ErrFromMemcachedWithKey(PylibMC_Client *, const char *,
         memcached_return, const char *, Py_ssize_t);
 static PyObject *PylibMC_ErrFromMemcached(PylibMC_Client *, const char *,
@@ -344,6 +345,7 @@ static PyMethodDef PylibMC_ClientType_methods[] = {
     {"clone", (PyCFunction)PylibMC_Client_clone, METH_NOARGS,
         "Clone this client entirely such that it is safe to access from "
         "another thread. This creates a new connection."},
+    {"server_by_key", (PyCFunction)PylibMC_Client_server_by_key, METH_O, "Determine which server a key maps to."},
     {NULL, NULL, 0, NULL}
 };
 /* }}} */

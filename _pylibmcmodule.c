@@ -440,6 +440,19 @@ static PyObject *_PylibMC_parse_memcached_result(memcached_result_st *res) {
                                               memcached_result_flags(res));
 }
 
+static PyObject *PylibMC_Client_server_by_key(PylibMC_Client *self, PyObject *arg) {
+    memcached_return rc = MEMCACHED_FAILURE;
+    memcached_server_instance_st srv = NULL;
+
+    srv = memcached_server_by_key(self->mc, PyString_AS_STRING(arg), PyString_GET_SIZE(arg), &rc);
+
+    if (rc != MEMCACHED_SUCCESS) {
+        Py_RETURN_NONE;
+    }
+
+    return PyString_FromString(srv->hostname);
+}
+
 static PyObject *PylibMC_Client_get(PylibMC_Client *self, PyObject *arg) {
     char *mc_val;
     size_t val_size;
